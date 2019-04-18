@@ -1,4 +1,14 @@
-# Run Hello World! Docker 
+# Docker container
+
+## Table of Contents
+
+- [Docker container](#docker-container)
+  - [Table of Contents](#table-of-contents)
+    - [Run Hello World! Docker](#run-hello-world-docker)
+    - [Running a DB in a Container](#running-a-db-in-a-container)
+    - [WordPress with Docker](#wordpress-with-docker)
+
+### Run Hello World! Docker
 
 Open a bash terminal on your laptop.
 
@@ -40,7 +50,7 @@ For more examples and ideas, visit:
 
  Docker should now be installed and working correctly. Continue on below with the rest of the WordPress setup.
 
-# Running a DB in a Container
+### Running a DB in a Container
 
 Before installing WordPress with Docker you will need to have somewhere to store the data. MariaDB is a community-developed relational database management system and a drop-in replacement for MySQL. It is [officially available on Docker Hub](https://hub.docker.com/_/mariadb/) and provides easy instructions with up to date images.
 
@@ -54,15 +64,15 @@ Downloading and installing a new MariaDB container can all be performed with a s
 
 MariaDB Environment variables, these are marked in the Docker command with -e:
 
-* -e MYSQL_ROOT_PASSWORD= Set your own password here. We suggest as a good practice to generate a password using [random.org](https://www.random.org) password generator;
-* -e MYSQL_DATABASE= Creates and names a new database e.g. wordpress;
+- -e MYSQL_ROOT_PASSWORD= Set your own password here. We suggest as a good practice to generate a password using [random.org](https://www.random.org) password generator;
+- -e MYSQL_DATABASE= Creates and names a new database e.g. wordpress;
 
 Docker parameters:
 
-* –name wordpressdb – Names the container;
-* -v “$PWD/database”:/var/lib/mysql – Creates a data directory linked to the container storage to ensure data persistence;
-* d – Tells Docker to run the container in daemon;
-* mariadb:latest – Finally defines what to install and which version;
+- –name wordpressdb – Names the container;
+- -v “$PWD/database”:/var/lib/mysql – Creates a data directory linked to the container storage to ensure data persistence;
+- -d – Tells Docker to run the container in daemon;
+- mariadb:latest – Finally defines what to install and which version;
 
 Then run the command below while replacing the <password> with your own.
 
@@ -106,7 +116,7 @@ docker <command> --help
 
 Full command-line documentation is also available over at [Docker support page](https://docs.docker.com/engine/reference/commandline/cli/).
 
-# WordPress with Docker
+### WordPress with Docker
 
 Applications in containers run isolated from one another in the userspace of the host operating system sharing the kernel with other containers. This reduces the overhead required to run packaged software while also enabling the containers to run on any kind of infrastructure. To allow applications within different containers to work with one another Docker supports container linking.
 
@@ -126,11 +136,11 @@ WordPress container also takes environment variables and Docker parameters:
 * -d – Makes the container run on background
 * wordpress – Tells Docker what to install. Uses the package downloaded earlier with the docker pull wordpress -command.
 
-Run the command below while replacing the <password> as you did for the MariaDB container.
+Run the command below while replacing the \<password\> as you did for the MariaDB container.
 
 ```bash
 docker run -e WORDPRESS_DB_PASSWORD=<password> --name wordpress --link wordpressdb:mysql -p 80:80 -v "$PWD/html":/var/www/html -d wordpress
 ```
 
-Then open your laptop’s IP address in a web browser to test the installation. You should be redirected to the initial WordPress setup page at http://<your IP>/wp-admin/install.php. 
+Then open your laptop’s IP address in a web browser to test the installation. You should be redirected to the initial WordPress setup page at http://\<your IP\>/wp-admin/install.php. 
 Go through the setup wizard and you are done.

@@ -1,5 +1,19 @@
 # Packer build AMI images
 
+## Table of Contents
+
+- [Packer build AMI images](#packer-build-ami-images)
+  - [Table of Contents](#table-of-contents)
+    - [Getting started](#getting-started)
+    - [Terraform](#terraform)
+    - [Authentication](#authentication)
+    - [VPC](#vpc)
+    - [Security Group](#security-group)
+    - [EC2](#ec2)
+    - [Elastic Load Balancer](#elastic-load-balancer)
+
+### Getting started
+
 First of all, install Packer following the vendos instruction:
 
 https://www.packer.io/intro/getting-started/install.html#precompiled-binaries
@@ -117,7 +131,7 @@ The last row show the AMI ID.
 Connect to the AWS console: Service -> EC2 -> Images -> AMIs and search for the AMI ID created by Packer.
 Your AMI ID will be different.
 
-## Terraform
+### Terraform
 
 For this tutorial we working with Terraform Configuration Language 0.11.
 Terraform code is written in the HashiCorp Configuration Language (HCL) in files with the extension .tf.
@@ -168,8 +182,7 @@ variable "teamid" {
 }
 ```
 
-
-## Authentication
+### Authentication
 
 Provide your credentials via the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY, environment variable:
 
@@ -178,7 +191,7 @@ export AWS_ACCESS_KEY_ID="anaccesskey"
 export AWS_SECRET_ACCESS_KEY="asecretkey"
 ```
 
-## VPC
+### VPC
 
 VPC , or Virtual Private Cloud, is an isolated area of your AWS account that has its own virtual network and IP address space. 
 
@@ -256,9 +269,8 @@ This command install modules dependencies in order to convert your terraform pla
 After this command you're ready to "plan" your infrastructure!
 Note, if variables are defined but not valorized, before plan terraform pront to insert a value:
 
-
 ```bash
-terraform plan -out=out.tfplan 
+terraform plan -out=out.tfplan
 ```
 
 The plan command lets you see what Terraform will do before actually making any changes. This is a great way to
@@ -273,8 +285,7 @@ If the output of the plann look good and not try to delete production resource, 
 terraform apply "out.tfplan"
 ```
 
-
-## Security Group
+### Security Group
 
 By default, AWS does not allow any incoming or outgoing traffic from an EC2 or database Instance. 
 To allow AWS services to receive traffic from internet or other subnet, you need to create a Security Group a.k.a. firewall.
@@ -341,7 +352,7 @@ resource "aws_security_group" "top_networks_default_sg" {
 
 Now plan and if is SAFE execute!
 
-## EC2
+### EC2
 
 In AWS a server or virtual machine is known as an EC2 Instance.
 
@@ -388,6 +399,7 @@ resource "aws_instance" "top_networks_ec2" {
   }
 }
 ```
+
 If everithings will be fine, last row of the output will be:
 
 ```bash
@@ -396,7 +408,7 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
 Try to connect to the EC2! Retrive public IP address on the AWS console (pay attention on teamid tag!). 
 
-## Elastic Load Balancer
+### Elastic Load Balancer
 
 A load balancer distribute traffic across your servers.
 Elastic Load Balancer is highly available and scalable.
@@ -451,7 +463,7 @@ curl -v  topnetworkselb-0-2056735367.eu-west-1.elb.amazonaws.com
 > Host: topnetworkselb-0-2056735367.eu-west-1.elb.amazonaws.com
 > User-Agent: curl/7.54.0
 > Accept: */*
-> 
+>
 < HTTP/1.1 200 OK
 < Accept-Ranges: bytes
 < Content-Type: text/html
@@ -461,7 +473,7 @@ curl -v  topnetworkselb-0-2056735367.eu-west-1.elb.amazonaws.com
 < Server: nginx/1.14.0 (Ubuntu)
 < Content-Length: 612
 < Connection: keep-alive
-< 
+<
 <!DOCTYPE html>
 <html>
 <head>
